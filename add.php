@@ -2,6 +2,7 @@
 
 	if (!empty($_POST)) {
 		$title = $_POST['title'];
+		$date = $_POST['date'];
 		$description = $_POST['description'];
 		$text = $_POST['text'];
 

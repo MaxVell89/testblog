@@ -13,6 +13,10 @@
 			<label for="title">Название статьи</label><br>
 			<input id="title" type="text" name="title">
 		</div>
+		<div class="form_group">
+			<label for="date">Дата</label><br>
+			<input id="date" type="date" name="date">
+		</div>
 			<div class="form_group">
 			<label for="description">Краткое описание</label><br>
 			<textarea name="description" id="description" cols="40" rows="10"></textarea>
