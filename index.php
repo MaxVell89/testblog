@@ -1,14 +1,18 @@
 <?php 
 
-require_once __DIR__ . '/autoload.php';
+require __DIR__ . '/autoload.php';
 
 $ctrl = isset($_GET['ctrl']) ? $_GET['ctrl'] : 'News';
 $act = isset($_GET['act']) ? $_GET['act'] : 'All';
+// $id = isset($_GET['id']) ? $_GET['id'] : '0';
 
-$controllerClassName = $ctrl . 'Controller';
+if (!empty($_POST)) {
+	$ctrl = 'Admin';
+	$act = 'Add';
+}
 
-$controller = new $controllerClassName;
+$controllerName = $ctrl . 'Controller';
+
+$controller = new $controllerName;
 $method = 'action' . $act;
 $controller->$method();
-
-?>
