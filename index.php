@@ -1,10 +1,13 @@
-<?php 
+<?php
 
 require __DIR__ . '/autoload.php';
 
-$ctrl = isset($_GET['ctrl']) ? $_GET['ctrl'] : 'News';
-$act = isset($_GET['act']) ? $_GET['act'] : 'All';
-$id = isset($_GET['id']) ? $_GET['id'] : '';
+$path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$pathParts = explode('/', $path);
+
+$ctrl = !empty($pathParts[1]) ? ucfirst($pathParts[1]) : 'News';
+$act = !empty($pathParts[2]) ? ucfirst($pathParts[2]) : 'All';
+$id = !empty($pathParts[3]) ? $pathParts[3] : '';
 
 if (isset($_POST['edit'])) {
 	$id = $_POST['id'];
@@ -14,10 +17,26 @@ if (isset($_POST['edit'])) {
 	$ctrl = 'Admin';
 	$act = 'Add';
 }
-	
 
-$controllerName = $ctrl . 'Controller';
+$controllerName = 'Application\\Controllers\\' . $ctrl;
 
 $controller = new $controllerName;
 $method = 'action' . $act;
-$controller->$method();
+
+try {
+	$controller->$method($id);
+} catch (ModelException $e) {
+	$view = new View();
+	$view->error = $e->getMessage();
+	$view->display('error.php');
+} catch (E404Exception $e) {
+    $view = new View();
+    $view->error = $e->getMessage();
+    $view->display('404.php');
+} catch (PDOEXception $e) {
+    $view = new View();
+    $view->error = $e->getMessage();
+    $view->display('403.php');
+    file_put_contents('PDOErrors.txt', $e->getMessage(), FILE_APPEND);
+    exit;
+}

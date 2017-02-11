@@ -1,8 +1,10 @@
 <?php
+use Application\Models\News;
 
-class AdminController {
-
-	public function actionAdd() {
+class AdminController
+{
+	public function actionAdd()
+    {
 		if (empty($_POST)) {
 			include __DIR__ . '/../views/admin/add.php';
 		} else {
@@ -11,7 +13,7 @@ class AdminController {
 			$insNews->title = $_POST['title'];
 			$insNews->text = $_POST['text'];
 
-			if ($insNews->insert()) {
+			if ($insNews->save()) {
 				echo 'ok<br>';
 				echo '<a href="/">На главную</a>';
 			} else {
@@ -20,13 +22,13 @@ class AdminController {
 		}
 	}
 
-	public function actionEdit() {	
-		
+	public function actionEdit($id)
+    {
 		if (!isset($_POST['edit'])) {
 			$item = News::findOneByPk($id);
 			$view = new View;
 			$view->item = $item;
-			$view->id = $_GET['id'];
+			$view->id = $id;
 			$view->display('admin/edit.php');
 		} else {
 			$id = $_POST['id'];
@@ -34,17 +36,18 @@ class AdminController {
 			$updNews->title = $_POST['title'];
 			$updNews->text = $_POST['text'];
 
-			if ($updNews->update($id)) {
+			if ($updNews->save($id)) {
 				echo 'ok<br>';
 				echo '<a href="/">На главную</a>';
 			} else {
 				echo 'false';
+                echo '<a href="/">На главную</a>';
 			}
 		}
 	}
 
-	public function actionDelete() {
-		$id = $_GET['id'];
+	public function actionDelete($id)
+    {
 		$db = new News();
 		if ($db->delete($id)) {
 			echo 'ok<br>';

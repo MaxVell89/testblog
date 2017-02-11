@@ -1,8 +1,6 @@
 <?php
 
-class Admin 
-	extends AbstractModel {
-		
-		protected static $table = 'articles';
-
-	}
+class Admin extends AbstractModel
+{
+    protected static $table = 'articles';
+}

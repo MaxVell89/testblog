@@ -1,19 +1,21 @@
 <?php 
 
-class View {
-
+class View
+{
 	protected $data = [];
 
-	public function __set($k, $v) {
+	public function __set($k, $v)
+    {
 		$this->data[$k] = $v;
 	}
 
-	public function __get($k) {
+	public function __get($k)
+    {
 		return $this->data[$k];
 	}
 
-	public function render($template) {
-
+	public function render($template)
+    {
 		foreach ($this->data as $key => $val) {
 			$$key = $val;
 		}
@@ -24,7 +26,8 @@ class View {
 		return $content;
 	}
 
-	public function display($template) {
+	public function display($template)
+    {
 		echo $this->render($template);
 	}
 
