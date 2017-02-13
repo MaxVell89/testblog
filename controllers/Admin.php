@@ -1,7 +1,8 @@
 <?php
+namespace Application\Controllers;
 use Application\Models\News;
 
-class AdminController
+class Admin
 {
 	public function actionAdd()
     {
@@ -26,7 +27,7 @@ class AdminController
     {
 		if (!isset($_POST['edit'])) {
 			$item = News::findOneByPk($id);
-			$view = new View;
+			$view = new \View;
 			$view->item = $item;
 			$view->id = $id;
 			$view->display('admin/edit.php');

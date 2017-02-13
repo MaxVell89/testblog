@@ -98,7 +98,7 @@ abstract class AbstractModel
 		return $db->execute($sql, [':id' => $id]);
 	}
 
-	public function save($id)
+	public function save($id = '')
     {
 	    if (false == $id) {
 	        return $this->insert();
